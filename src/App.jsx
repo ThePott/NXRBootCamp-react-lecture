@@ -1,72 +1,35 @@
 import './App.css'
 
-const Bread = () => {
-  return (
-    <div className="bread">
-      <mark>밀가루</mark>
-      <span>물</span>
-      <span>계란</span>
-      <span>이스트</span>
-    </div>
-  )
-}
-const Patty = () => {
-  return (
-    <div className="patty">
-      <mark>소고기</mark>
-      <span>후추</span>
-      <span>소금</span>
-    </div>
-  )
-}
-const Leaf = () => {
-  return (
-    <div className="leaf">
-      <mark>잎사귀</mark>
-      <span>줄기</span>
-    </div>
-  )
-}
-const Tomato = () => {
-  return (
-    <div className="tomato">
-      <mark>껍질</mark>
-      <span>과육</span>
-      <span>씨앗</span>
-    </div>
-  )
-}
-const Cheese = () => {
-  return (
+// import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 
-    <div className="cheese">
-      <mark>우유</mark>
-      <span>소금</span>
-      <span>색소</span>
-    </div>
-  )
-}
+// // 함수형 컴포넌트에서 상태 관리하기
+// const App = () => {
+//   const [count, setCount] = useState(0)
 
-const Hamburger = () => {
-  return (
-    <>
-      <Bread />
-      <Patty />
-      <Leaf />
-      <Tomato />
-      <Cheese />
-      <Bread />
-    </>
-  )
-}
+//   return (
+//     <>
+//       <div>useState으로 상태를 관리합니다</div>
+//       <div>{count}</div>
+//       <button onClick={() => setCount((prev) => prev + 1)}>+</button>
+//       <button onClick={() => setCount((prev) => prev - 1)}>-</button>
+//     </>
+//   )
+// }
 
-const App = () => {
-  return (
-    <>
-      <div>안녕하세요! 이건 함수형 컴포넌트입니다.</div>
-      <Hamburger />
-    </>
-  )
+class App extends Component {
+  state = { counter: 0 }
+
+  render() {
+    return (
+      <>
+        <div>asdf</div>
+        <div>count: {this.state.counter}</div>
+        <button onClick={() => this.setState({ counter: this.state.counter + 1 })}>+</button>
+        <button onClick={() => this.setState({ counter: this.state.counter - 1 })}>-</button>
+      </>
+    )
+  }
 }
 
 export default App
