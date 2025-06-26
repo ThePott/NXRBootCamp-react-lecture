@@ -34,7 +34,26 @@ class CountDisplay extends Component {
     console.log("---- props in class component:", this.props)
     return (
       <div>이 화면은 Props를 받습니다: {this.props.counter}</div>
-      // <div>이 화면은 Props를 받습니다: {count}</div>
+    )
+  }
+}
+
+class PlusButton extends Component {
+  render() {
+    return (
+      <>
+        <button onClick={this.props.increase}>+</button>
+      </>
+    )
+  }
+}
+
+class MinusButton extends Component {
+  render() {
+    return (
+      <>
+        <button onClick={this.props.decrease}>-</button>
+      </>
     )
   }
 }
@@ -42,13 +61,18 @@ class CountDisplay extends Component {
 class App extends Component {
   state = { counter: 0 }
 
+  // useState와 달리 prev가 주어지지 않기에 미리 함수를 작성하고 내려보낸다.
+  increase = () => this.setState({counter: this.state.counter + 1})
+  decrease = () => this.setState({counter: this.state.counter - 1})
+  
   render() {
     return (
       <>
         <div>asdf</div>
         <CountDisplay counter={this.state.counter} />
-        <button onClick={() => this.setState({ counter: this.state.counter + 1 })}>+</button>
-        <button onClick={() => this.setState({ counter: this.state.counter - 1 })}>-</button>
+
+        <PlusButton increase={this.increase} />
+        <MinusButton decrease={this.decrease} />
       </>
     )
   }
