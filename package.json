@@ -1,22 +1,27 @@
 {
-    "name": "nxrbootcamp-react-lecture",
-    "version": "1.0.0",
-    "main": "npm-demo.js",
-    "type": "module",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "demo-start": "node npm-demo.js"
-    },
-
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ThePott/NXRBootCamp-react-lecture.git"
-    },
-    "author": "하흥주 github.com/thepott",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/ThePott/NXRBootCamp-react-lecture/issues"
-    },
-    "homepage": "https://github.com/ThePott/NXRBootCamp-react-lecture#readme",
-    "description": "NXR 부트캠프 리액트 기초과정 강의 노트"
+  "name": "nxr-lecture-note-react-basic",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "eslint": "^9.29.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.2.0",
+    "vite": "^7.0.0"
+  }
 }

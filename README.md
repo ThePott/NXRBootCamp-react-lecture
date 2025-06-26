@@ -33,6 +33,8 @@ Each commit message includes the chapter name and key concepts covered
 # 🛠️ Prerequisites
 
 Node.js installed
+Initial setup is based on "Build a React app from Scratch" with Vite
+    https://react.dev/learn/build-a-react-app-from-scratch
 
 # 📝 Notes
 This is a learning repository. Code evolves with each chapter as new React concepts are introduced and implemented.
