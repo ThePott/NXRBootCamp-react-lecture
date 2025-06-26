@@ -1,0 +1,22 @@
+{
+    "name": "nxrbootcamp-react-lecture",
+    "version": "1.0.0",
+    "main": "npm-demo.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "demo-start": "node npm-demo.js"
+    },
+
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ThePott/NXRBootCamp-react-lecture.git"
+    },
+    "author": "하흥주 github.com/thepott",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ThePott/NXRBootCamp-react-lecture/issues"
+    },
+    "homepage": "https://github.com/ThePott/NXRBootCamp-react-lecture#readme",
+    "description": "NXR 부트캠프 리액트 기초과정 강의 노트"
+}
