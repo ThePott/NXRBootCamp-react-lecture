@@ -5,99 +5,37 @@ import React, { Component, useState } from 'react'
 
 // 상태 끌어올리기 함수형 컴포넌트
 
-const CountDisplay = ({ count }) => {
+const Display = ({ whatToShow }) => {
   return (
-    <div>이 화면은 Props를 받습니다: {count}</div>
+    <div>what to show: {whatToShow}</div>
   )
 }
 
-const PlusButton = ({ setCount }) => {
-  return (
-    <button onClick={() => setCount((prev) => prev + 1)}>+</button>
-  )
-}
+const PushButton = ({ array, setArray }) => {
+  const push = () => {
+    // ---- 잘못된 코드
+    array.push(9)
+    setArray(array) // <-- 이렇게 하면 같은 참조 주소가 들어가니 같은 값이라 판단하여 리렌더링이 안 된다.
+    // ---- 여기까지
+    setArray((prev) => [...prev, 9]) // <--- 이렇게 주소가 다른 새로운 배열을 넣어야
+  }
 
-const MinusButton = ({ setCount }) => {
   return (
-    <button onClick={() => setCount((prev) => prev - 1)}>-</button>
-  )
-}
-
-const CounterInput = ({ setCount }) => {
-  return (
-    <input type="number" onKeyUp={(event) => setCount(event.target.value)} />
+    <button onClick={push}>+</button>
   )
 }
 
 const App = () => {
-  const [count, setCount] = useState(0)
+  const [array, setArray] = useState([1, 2, 3])
 
   return (
     <>
       <div>useState으로 상태를 관리합니다</div>
-      <CountDisplay count={count} />
+      <Display whatToShow={array} />
 
-      <PlusButton setCount={setCount} />
-      <MinusButton setCount={setCount} />
-
-      <CounterInput setCount={setCount} />
+      <PushButton array={array} setArray={setArray} />
     </>
   )
 }
-
-//// 상태 끌어올리기 클래스형 컴포넌트
-// class CountDisplay extends Component {
-//   //// 생략 가능
-//   // constructor(props) {
-//   //   super(props)
-//   // }
-
-//   render() {
-//     console.log("---- props in class component:", this.props)
-//     return (
-//       <div>이 화면은 Props를 받습니다: {this.props.counter}</div>
-//     )
-//   }
-// }
-
-// class PlusButton extends Component {
-//   render() {
-//     return (
-//       <>
-//         <button onClick={this.props.increase}>+</button>
-//       </>
-//     )
-//   }
-// }
-
-// class MinusButton extends Component {
-//   render() {
-//     return (
-//       <>
-//         <button onClick={this.props.decrease}>-</button>
-//       </>
-//     )
-//   }
-// }
-
-// class App extends Component {
-//   state = { counter: 0 }
-
-//   // useState와 달리 prev가 주어지지 않기에 미리 함수를 작성하고 내려보낸다.
-//   increase = () => this.setState({counter: this.state.counter + 1})
-//   decrease = () => this.setState({counter: this.state.counter - 1})
-
-//   render() {
-//     return (
-//       <>
-//         <div>asdf</div>
-//         <CountDisplay counter={this.state.counter} />
-
-//         <PlusButton increase={this.increase} />
-//         <MinusButton decrease={this.decrease} />
-//       </>
-//     )
-//   }
-// }
 
 export default App
