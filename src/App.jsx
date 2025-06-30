@@ -1,51 +1,45 @@
-import { Component, useState } from 'react'
+import { Component, useEffect, useState } from 'react'
 import './App.css'
 
 
 
-class CountBox extends Component {
-  constructor(props) {
-    super(props)
-    console.log("---- constructed")
-  }
+const CountBox = () => {
+  const [count, setCount] = useState(0)
 
-  state = {count: 1}
+  useEffect(
+    () => {
+      console.log("---- effect function called")
+      const timer = setTimeout(() => console.log("---- waited for 10 sec"), 10000)
 
-  componentDidMount() {
-    console.log("---- mounted")
-  }
+      return () => {
+        clearTimeout(timer)
+        console.log("---- cleaned up timeout")
+      }
+    }
+  )
 
-  componentDidUpdate() {
-    console.log("---- updated")
-  }
-
-  componentWillUnmount() {
-    console.log("---- will unmount")
-  }
-
-  handleClick () {
-    this.setState({ count: this.state.count + 1})
+  const handleClick = () => {
+    setCount(count + 1)
     console.log("---- clicked")
   }
 
-  render() {
-    return (
-      <>
-        아하하
-        <p>{`count: ${this.state.count}`}</p>
-        <button onClick={() => this.handleClick()}>up</button>
-      </>
-    )
-  }
+  console.log("---- mounted")
+  return (
+    <>
+      아하하
+      <p>{`count: ${count}`}</p>
+      <button onClick={() => handleClick()}>up</button>
+    </>
+  )
+
 }
 
 const App = () => {
   const [doShow, setDoShow] = useState(true)
   return (
     <>
-    {/* <CountBox /> */}
-    {doShow && <CountBox />}
-    <button onClick={() => setDoShow((prev) => !prev)}>toggle do show</button>
+      {doShow && <CountBox />}
+      <button onClick={() => setDoShow((prev) => !prev)}>toggle do show</button>
     </>
   )
 }
