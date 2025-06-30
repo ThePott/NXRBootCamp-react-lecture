@@ -1,34 +1,53 @@
-import { Link, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router'
+import { Component, useState } from 'react'
 import './App.css'
 
-const Woohoo = () => {
-  const params = useParams()
-  console.log(params)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const age = searchParams.get("age")
-  console.log("---- age:", age)
-  return (
-    <div>whoohoo</div>
-  )
+
+
+class CountBox extends Component {
+  constructor(props) {
+    super(props)
+    console.log("---- constructed")
+  }
+
+  state = {count: 1}
+
+  componentDidMount() {
+    console.log("---- mounted")
+  }
+
+  componentDidUpdate() {
+    console.log("---- updated")
+  }
+
+  componentWillUnmount() {
+    console.log("---- will unmount")
+  }
+
+  handleClick () {
+    this.setState({ count: this.state.count + 1})
+    console.log("---- clicked")
+  }
+
+  render() {
+    return (
+      <>
+        아하하
+        <p>{`count: ${this.state.count}`}</p>
+        <button onClick={() => this.handleClick()}>up</button>
+      </>
+    )
+  }
 }
 
-
 const App = () => {
-  const location = useLocation()
-  console.log("---- location:", location, location.path, location.params)
+  const [doShow, setDoShow] = useState(true)
   return (
     <>
-    <Link to="/woohoo/김오즈?age=36">woohoo</Link>
-    <Link to="/yahoo">yahoo</Link>
-    <Link to="/wahoo">wahoo</Link>
-    <Routes>
-      <Route path="/woohoo/:name" element={<Woohoo />} />
-      <Route path="/yahoo" element={<div>yahoo</div>} />
-      <Route path="/wahoo" element={<div>wahoo</div>} />
-    </Routes>
+    {/* <CountBox /> */}
+    {doShow && <CountBox />}
+    <button onClick={() => setDoShow((prev) => !prev)}>toggle do show</button>
     </>
   )
 }
 
 export default App
-
