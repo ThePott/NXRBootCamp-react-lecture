@@ -1,41 +1,34 @@
+import { Link, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router'
 import './App.css'
 
-import React, { Component, useState } from 'react'
-// import React, { Component } from 'react'
-
-// 상태 끌어올리기 함수형 컴포넌트
-
-const Display = ({ whatToShow }) => {
+const Woohoo = () => {
+  const params = useParams()
+  console.log(params)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const age = searchParams.get("age")
+  console.log("---- age:", age)
   return (
-    <div>what to show: {whatToShow}</div>
+    <div>whoohoo</div>
   )
 }
 
-const PushButton = ({ array, setArray }) => {
-  const push = () => {
-    // ---- 잘못된 코드
-    array.push(9)
-    setArray(array) // <-- 이렇게 하면 같은 참조 주소가 들어가니 같은 값이라 판단하여 리렌더링이 안 된다.
-    // ---- 여기까지
-    setArray((prev) => [...prev, 9]) // <--- 이렇게 주소가 다른 새로운 배열을 넣어야
-  }
-
-  return (
-    <button onClick={push}>+</button>
-  )
-}
 
 const App = () => {
-  const [array, setArray] = useState([1, 2, 3])
-
+  const location = useLocation()
+  console.log("---- location:", location, location.path, location.params)
   return (
     <>
-      <div>useState으로 상태를 관리합니다</div>
-      <Display whatToShow={array} />
-
-      <PushButton array={array} setArray={setArray} />
+    <Link to="/woohoo/김오즈?age=36">woohoo</Link>
+    <Link to="/yahoo">yahoo</Link>
+    <Link to="/wahoo">wahoo</Link>
+    <Routes>
+      <Route path="/woohoo/:name" element={<Woohoo />} />
+      <Route path="/yahoo" element={<div>yahoo</div>} />
+      <Route path="/wahoo" element={<div>wahoo</div>} />
+    </Routes>
     </>
   )
 }
 
 export default App
+
