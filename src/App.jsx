@@ -1,94 +1,51 @@
-import { useCallback, useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
 
+const UseRefInput = () => {
+  // useRef 사용처 1. DOM Node 를 만들고 여기와 직접 상호작용하여 리렌더를 줄임
+  const inputRef = useRef(null)
+  console.log("---- rendered")
+  
+  const printCurrentValue = () => {
+    const value = inputRef.current.value
+    console.log("---- value:", value)
+  }
+  
+  // useRef 사용처 2. 리렌더에도 변하지 않는 값을 만드는 용도 - useMemo와 비슷
+  const [count, setCount] = useState(0)
+  const countRef = useRef(null)
 
-const App = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [scrollPercentage, setScrollPercentage] = useState(0)
-
-  const mouseMoveEventListener = useCallback(
-    (event) => {
-      setMousePosition({ x: event.clientX, y: event.clientY })
-    },
-    []
-  )
-
-  const scrollEventListener = useCallback(
-    (event) => {
-      const scrollOffset = event.target.scrollTop
-      const scrollHeight = event.target.scrollHeight
-      const screenHeight = event.target.clientHeight
-      const scrollPercentage = scrollOffset / (scrollHeight - screenHeight) * 100
-
-      setScrollPercentage(scrollPercentage)
-      console.log(scrollPercentage)
-    },
-    []
-  )
-
+  // useMemo를 쓴다면? ---> useMemo는 비싼 계산의 결괏값을 저장하기 위한 것이다. 이런 매뉴얼 기록을 위한 게 아니다.
+  // const storedCount = useMemo(
+  //   () => count,
+  //   []
+  // )
 
   return (
-    <div style={{ position: "relative" }}
-      onMouseMove={mouseMoveEventListener}>
-      <div style={{ width: "100px", height: "100px", backgroundColor: "yellow", position: "fixed", top: mousePosition.y, left: mousePosition.x }}></div>
-      <div style={{ height: "10px", width: `${scrollPercentage}%`, backgroundColor: "red", position: "fixed", top: 0, left: 0 }}></div>
-      <div
-        style={{ height: "300px", backgroundColor: "salmon", overflowY: "scroll" }}
-        onScroll={scrollEventListener}>
-        <div>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-          <p> 아ㅏ아아</p>
-        </div>
-      </div>
-    </div>
+    <>
+      {/* 1번 예제 */}
+      <input ref={inputRef} />
+      <button onClick={printCurrentValue}></button>
+
+      {/* 2번 예제 */}
+      <p>{`count: ${count}`}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+      <button onClick={() => countRef.current = count}>store</button>
+      {/* <button onClick={() => console.log("---- stored:", countRef.current)}>print</button>
+      <button onClick={storedCount}>store</button>
+      <button onClick={() => console.log("---- memo:", storedCount)}>print memo</button> */}
+    </>
+  )
+}
+
+const App = () => {
+  // const [inputValue, setInputValue] = useState("")
+
+  return (
+    <>
+      <UseRefInput />
+    </>
   )
 }
 
