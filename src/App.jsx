@@ -1,50 +1,62 @@
-import { useRef, useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
+import axios from 'axios'
 
-const UseRefInput = () => {
-  // useRef 사용처 1. DOM Node 를 만들고 여기와 직접 상호작용하여 리렌더를 줄임
-  const inputRef = useRef(null)
-  console.log("---- rendered")
-  
-  const printCurrentValue = () => {
-    const value = inputRef.current.value
-    console.log("---- value:", value)
+const useCounter = (initialValue) => {
+  const [count, setCount] = useState(initialValue)
+
+  const increase = () => { setCount(count + 1) }
+  const decrease = () => { setCount(count - 1) }
+
+  return { count, increase, decrease }
+}
+
+const getWithAxios = async (url, setDataArray, setError, setIsLoading) => {
+  try {
+    const response = await axios.get(url)
+    setDataArray(response)
+  } catch (error) {
+    setError(error)
+  } finally {
+    setIsLoading(false)
   }
-  
-  // useRef 사용처 2. 리렌더에도 변하지 않는 값을 만드는 용도 - useMemo와 비슷
-  const [count, setCount] = useState(0)
-  const countRef = useRef(null)
+}
 
-  // useMemo를 쓴다면? ---> useMemo는 비싼 계산의 결괏값을 저장하기 위한 것이다. 이런 매뉴얼 기록을 위한 게 아니다.
-  // const storedCount = useMemo(
-  //   () => count,
-  //   []
-  // )
-
-  return (
-    <>
-      {/* 1번 예제 */}
-      <input ref={inputRef} />
-      <button onClick={printCurrentValue}></button>
-
-      {/* 2번 예제 */}
-      <p>{`count: ${count}`}</p>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      <button onClick={() => setCount(count - 1)}>-</button>
-      <button onClick={() => countRef.current = count}>store</button>
-      {/* <button onClick={() => console.log("---- stored:", countRef.current)}>print</button>
-      <button onClick={storedCount}>store</button>
-      <button onClick={() => console.log("---- memo:", storedCount)}>print memo</button> */}
-    </>
+const useGet = (url) => {
+  const [dataArray, setDataArray] = useState(null)
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  // 1. define async function inside useEffect
+  // 2. call it inside of useEffect
+  useEffect(
+    () => {
+      // effect function은 cleanup funtion 말고 다른 건 리던하면 안 된다.
+      // () => effectFunction
+      // () => getWithAxios(url, setDataArray, setError, setIsLoading) <-- return Promise
+      // () => { getWithAxios... } <--- doesn't return anything
+      getWithAxios(url, setDataArray, setError, setIsLoading)
+    },
+    [url]
   )
+
+  return { dataArray, error, isLoading }
 }
 
 const App = () => {
-  // const [inputValue, setInputValue] = useState("")
+  const { count, increase, decrease } = useCounter(100)
+
+  const { dataArray, error, isLoading } = useGet("localhost:3030/book")
 
   return (
     <>
-      <UseRefInput />
+      {/* Custom Hook 1: counter */}
+      <p>{count}</p>
+      <button onClick={increase}>+</button>
+      <button onClick={decrease}>-</button>
+
+      {isLoading && <p>...Loading</p>}
+      {error && <p>ERROR! {JSON.stringify(error)}</p>}
+      {dataArray && <p>DATA: {JSON.stringify(dataArray)}</p>}
     </>
   )
 }
